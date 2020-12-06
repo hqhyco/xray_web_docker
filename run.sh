@@ -48,7 +48,7 @@ docker run --rm -it -v /root/xray/ssl:/acme.sh --net=host neilpang/acme.sh --iss
 sed -i "s/abc.com/$domainName/g" /root/xray/config.json
 sed -i "s/048e0bf2-dd56-11e9-aa37-5600024c1d6a/$uuid/g" /root/xray/config.json
 docker run -d --name xray --network host --restart=always -v /root/xray/config.json:/etc/xray/config.json -v /root/xray/ssl:/etc/ssl teddysun/xray
-chmod u+x /caddy/caddy
+chmod u+x /root/caddy/caddy
 /root/caddy/caddy start --config /root/caddy/caddy.json
 
 cat > /etc/systemd/system/caddy.service <<EOF
@@ -68,6 +68,7 @@ EOF
 
 service caddy start
 systemctl enable caddy
+systemctl daemon-reload
 cat <<-EOF >./info.txt
 -----------------------------------------------
 地址：${your_domain}
@@ -89,8 +90,11 @@ cat /root/info.txt
 
 function remove(){
 docker rm -f xray
+systemctl disable caddy
+service caddy stop
 rm -rf /root/caddy
-rm -rf /root/xray
+rm /root/xray_web_docker.zip
+
 }
 
 start_menu(){

@@ -34,7 +34,7 @@
           ],
           "certificates": [
             {
-              "certificateFile": "/etc/ssl/abc.com/fullchain.crt",
+              "certificateFile": "/etc/ssl/abc.com/fullchain.cer",
               "keyFile": "/etc/ssl/abc.com/abc.com.key"
             }
           ]
