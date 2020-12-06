@@ -40,6 +40,8 @@ fi
 
 function install(){
 cd /root
+wget https://raw.githubusercontent.com/hqhyco/xray_web_docker/main/xray_web_docker.zip
+unzip xray_web_docker.zip
 read -p "请输入你的域名(eg: abc.com): " domainName
 uuid=$(cat /proc/sys/kernel/random/uuid)
 docker run --rm -it -v /root/xray/ssl:/acme.sh --net=host neilpang/acme.sh --issue -d $domainName --standalone
