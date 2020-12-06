@@ -1,0 +1,60 @@
+{
+  "admin": {
+    "disabled": true
+  },
+  "logging": {
+    "logs": {
+      "default": {
+        "writer": {
+          "output": "file",
+          "filename": "/var/log/caddy/access.log"
+        },
+        "encoder": {
+          "format": "console"
+        },
+        "level": "ERROR"
+      }
+    }
+  },
+  "apps": {
+    "http": {
+      "servers": {
+        "srv0": {
+          "listen": ["127.0.0.1:88"],
+          "listener_wrappers": [{
+            "wrapper": "proxy_protocol",
+            "timeout": "5s",
+            "allow": ["127.0.0.1/24"]
+          }],
+          "routes": [{
+            "handle": [{
+              "handler": "file_server",
+              "root": "/root/caddy/www"
+            }],
+            "terminal": true
+          }],
+          "automatic_https": {
+            "disable": true
+          },
+          "allow_h2c": true
+        },
+        "srv1": {
+          "listen": [":80"],
+          "routes": [{
+            "handle": [{
+              "handler": "static_response",
+              "status_code": "301", 
+              "headers": {
+                "Location": ["https://{http.request.host}{http.request.uri}"]
+              }
+            }],
+            "terminal": true
+          }],
+          "automatic_https": {
+            "disable": true
+          }
+        }
+      }
+    }
+  }
+}
