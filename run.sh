@@ -71,7 +71,7 @@ systemctl enable caddy
 systemctl daemon-reload
 cat <<-EOF >./info.txt
 -----------------------------------------------
-地址：${your_domain}
+地址：${domainName}
 端口：443
 id：${uuid}
 加密：none
