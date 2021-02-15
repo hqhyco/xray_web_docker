@@ -94,6 +94,7 @@ systemctl disable caddy
 service caddy stop
 rm -rf /root/caddy
 rm -rf /root/xray
+rm /root/info.txt
 rm /root/xray_web_docker.zip
 rm /etc/systemd/system/caddy.service
 }
